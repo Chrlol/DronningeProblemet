@@ -42,9 +42,9 @@ namespace DronningeProblemetWPF
         }
         private void DrawBoard()
         {
-            for (int x = 0; x < 8; x++)
+            for (var x = 0; x < 8; x++)
             {
-                for (int y = 0; y < 8; y++)
+                for (var y = 0; y < 8; y++)
                 {
                     PlaceField(x, y, ((x + y) % 2) == 0 ? Colors.Wheat : Colors.Black);
                 }
@@ -89,11 +89,11 @@ namespace DronningeProblemetWPF
             can.Children.Clear();
             DrawBoard();
             index.Content = CurrentIndex;
-            ChessBoard b = Boards.ElementAt(CurrentIndex);
+            var b = Boards.ElementAt(CurrentIndex);
 
-            for (int x = 0; x < 8; x++)
+            for (var x = 0; x < 8; x++)
             {
-                for (int y = 0; y < 8; y++)
+                for (var y = 0; y < 8; y++)
                 {
                     if (b.Board[x, y].Piece.Type == PieceType.Queen)
                         PlaceQueen(x, y);

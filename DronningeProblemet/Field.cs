@@ -25,5 +25,7 @@ namespace DronningeProblemet
             Color = color;
             Piece = p;
         }
+
+	    public bool IsFree => !Blocked && Piece.Type == PieceType.Empty;
     }
 }

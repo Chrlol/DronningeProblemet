@@ -23,8 +23,8 @@ namespace DronningeProblemet.BlockedFields
                     return new DefaultBlockedFiels();
                 case PieceType.Empty:
                     return new EmptyBlockedFields();
-                default:
-                    throw new ArgumentOutOfRangeException("type", type, null);
+	            default:
+		            throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
     }

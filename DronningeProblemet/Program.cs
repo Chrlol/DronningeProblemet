@@ -6,7 +6,7 @@ namespace DronningeProblemet
 {
     public class Program
     {
-        static void Main(string[] args)
+	    private static void Main(string[] args)
         {
             Console.WriteLine("Solution = " + Algorithm(Console.WriteLine).Queens + " Queens");
             Console.ReadLine();
@@ -23,9 +23,9 @@ namespace DronningeProblemet
             var solutionSet = new HashSet<ChessBoard>();
 
             // First queen can be in 64 places, place one in each and insert them into the HashSet.
-            for (int x = 0; x < 8; x++)
+            for (var x = 0; x < 8; x++)
             {
-                for (int y = 0; y < 8; y++)
+                for (var y = 0; y < 8; y++)
                 {
                     boards[x, y] = new ChessBoard();
                     boards[x, y].TryPlacePiece(x, y, queen);
@@ -33,23 +33,25 @@ namespace DronningeProblemet
                 }
             }
 
-            int numberOfQueens = 1;
+            var numberOfQueens = 1;
             while (true)
             {
                 var tempSolutionSet = new HashSet<ChessBoard>();
-                foreach (ChessBoard board in solutionSet)
+                foreach (var board in solutionSet)
                 {
-                    for (int x = 0; x < 8; x++)
+                    for (var x = 0; x < 8; x++)
                     {
-                        for (int y = 0; y < 8; y++)
+                        for (var y = 0; y < 8; y++)
                         {
                             // If coords are empty and unblocked, place a queen and add them to the temporary Solutionset.
-                            if (board.IsUnblocked(x, y))
-                            {
-                                ChessBoard newBoard = board.CopyBoard();
-                                newBoard.TryPlacePiece(x, y, queen);
-                                tempSolutionSet.Add(newBoard);
-                            }
+	                        if (!board.Board[x, y].IsFree)
+								continue;
+	                        var newBoard = board.Copy();
+
+	                        if (newBoard.TryPlacePiece(x, y, queen))
+		                        tempSolutionSet.Add(newBoard);
+	                        else
+		                        log("ERROR: Could not place piece");
                         }
                     }
                 }

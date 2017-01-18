@@ -7,13 +7,13 @@ namespace DronningeProblemet.BlockedFields
         public List<int[]> GetBlockedFields(int x, int y)
         {
             var list = new List<int[]>();
-            for (int i = 0; i < 8; i++)
+            for (var i = 0; i < 8; i++)
             {
                 list.Add(new[] { x, i });
                 list.Add(new[] { i, y });
             }
-            int tx = x;
-            int ty = y;
+            var tx = x;
+            var ty = y;
             while (tx < 7 && ty < 7)
             {
                 tx++;
