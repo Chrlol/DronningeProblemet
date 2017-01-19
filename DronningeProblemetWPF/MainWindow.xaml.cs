@@ -104,5 +104,23 @@ namespace DronningeProblemetWPF
             else
                 CurrentIndex++;
         }
+
+        private void turnButton_Click(object sender, RoutedEventArgs e)
+        {
+            can.Children.Clear();
+            DrawBoard();
+            index.Content = CurrentIndex;
+            var b = Boards.ElementAt(CurrentIndex).GetTurnedCopy();
+
+            for (var x = 0; x < 8; x++)
+            {
+                for (var y = 0; y < 8; y++)
+                {
+                    if (b.Board[x, y].Piece.Type == PieceType.Queen)
+                        PlaceQueen(x, y);
+                }
+            }
+            Boards[CurrentIndex] = b;
+        }
     }
 }

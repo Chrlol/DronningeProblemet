@@ -31,6 +31,23 @@ namespace DronningeProblemet
             return board;
         }
 
+        public ChessBoard GetTurnedCopy()
+        {
+            var board = new ChessBoard();
+
+            for (var x = 0; x < 8; x++)
+            {
+                for (var y = 0; y < 8; y++)
+                {
+                    board.Board[y, 7-x].Blocked = Board[x, y].Blocked;
+                    board.Board[y, 7-x].Piece = Board[x, y].Piece;
+                }
+            }
+
+
+            return board;
+        }
+
         /// <summary> Calculates if an object is a board, 
         /// if it is, then if it is equal to this board.</summary>
         /// <param name="obj"> The object in question. </param>
