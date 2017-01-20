@@ -9,6 +9,7 @@
         <Button Name="DrawNext" IsEnabled="False" Content="Draw Next" HorizontalAlignment="Left" Margin="589,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
         <Label Content="Index" HorizontalAlignment="Left" Margin="589,37,0,0" VerticalAlignment="Top"/>
         <Label Name="index" Content="" HorizontalAlignment="Left" Margin="635,37,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="turnButton" Content="Turn" HorizontalAlignment="Left" Margin="590,83,0,0" VerticalAlignment="Top" Width="75" Click="turnButton_Click"/>
 
     </Grid>
 </Window>

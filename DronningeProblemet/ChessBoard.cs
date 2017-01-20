@@ -31,6 +31,23 @@ namespace DronningeProblemet
             return board;
         }
 
+        public ChessBoard GetTurnedCopy()
+        {
+            var board = new ChessBoard();
+
+            for (var x = 0; x < 8; x++)
+            {
+                for (var y = 0; y < 8; y++)
+                {
+                    board.Board[y, 7-x].Blocked = Board[x, y].Blocked;
+                    board.Board[y, 7-x].Piece = Board[x, y].Piece;
+                }
+            }
+
+
+            return board;
+        }
+
         /// <summary> Calculates if an object is a board, 
         /// if it is, then if it is equal to this board.</summary>
         /// <param name="obj"> The object in question. </param>
@@ -41,42 +58,67 @@ namespace DronningeProblemet
                 return false;
             var board = (ChessBoard)obj;
 
-	        //return this.GetHashCode() == board.GetHashCode();
 
-			for (var x = 0; x < 8; x++)
-			{
-				for (var y = 0; y < 8; y++)
-				{
-					if (!board.Board[x, y].Piece.Equals(Board[x, y].Piece))
-						return false;
-					if ((board.Board[x, y].Blocked != Board[x, y].Blocked))
-						return false;
-					if ((board.Board[x, y].Color != Board[x, y].Color))
-						return false;
-				}
-			}
-			return true;
-		}
+            var boardT1 = board.GetTurnedCopy();
+            var boardT2 = boardT1.GetTurnedCopy();
+            var boardT3 = boardT2.GetTurnedCopy();
+
+
+            return CustomEquals(board)
+                   || CustomEquals(boardT1)
+                   || CustomEquals(boardT2)
+                   || CustomEquals(boardT3);
+        }
+
+        private bool CustomEquals(ChessBoard b1)
+        {
+            for (var x = 0; x < 8; x++)
+            {
+                for (var y = 0; y < 8; y++)
+                {
+                    if (!b1.Board[x, y].Piece.Equals(Board[x, y].Piece))
+                        return false;
+                    if (b1.Board[x, y].Blocked != Board[x, y].Blocked)
+                        return false;
+                }
+            }
+            return true;
+        }
 
         /// <summary>Gets the hashcode based on placement of Queens,
         /// this method should be redone, if any other Chesspiece then Queens is used.</summary>
         /// <returns>Hashcode based on placement of Queens.</returns>
         public override int GetHashCode()
         {
+            var h1 = GetThisHash();
+            var board = GetTurnedCopy();
+            var h2 = board.GetThisHash();
+            board = board.GetTurnedCopy();
+            var h3 = board.GetThisHash();
+            board = board.GetTurnedCopy();
+            var h4 = board.GetThisHash();
+            var list = new List<int> { h1, h2, h3, h4 };
+            list.Sort();
+            return list.Select(x => x.ToString()).Aggregate((x, y) => x.ToString() + y.ToString()).GetHashCode();
+        }
+
+        public int GetThisHash()
+        {
             var ret = 0;
             for (var x = 0; x < 8; x++)
             {
                 for (var y = 0; y < 8; y++)
                 {
-	                if (Board[x, y].Piece.Type != PieceType.Queen)
-						continue;
-	                ret = ret * 8;
-	                ret = ret + (x + 1);
-	                ret = ret * 8;
-	                ret = ret + (y + 1);
+                    if (Board[x, y].Piece.Type != PieceType.Queen)
+                        continue;
+                    ret = ret * 8;
+                    ret = ret + (x + 1);
+                    ret = ret * 8;
+                    ret = ret + (y + 1);
                 }
             }
             return ret;
+
         }
 
         /// <summary> Try to place a Chesspiece on the given x,y coord, 
