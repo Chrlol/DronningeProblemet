@@ -58,15 +58,27 @@ namespace DronningeProblemet
                 return false;
             var board = (ChessBoard)obj;
 
+
+            var boardT1 = board.GetTurnedCopy();
+            var boardT2 = boardT1.GetTurnedCopy();
+            var boardT3 = boardT2.GetTurnedCopy();
+
+
+            return CustomEquals(board)
+                   || CustomEquals(boardT1)
+                   || CustomEquals(boardT2)
+                   || CustomEquals(boardT3);
+        }
+
+        private bool CustomEquals(ChessBoard b1)
+        {
             for (var x = 0; x < 8; x++)
             {
                 for (var y = 0; y < 8; y++)
                 {
-                    if (!board.Board[x, y].Piece.Equals(Board[x, y].Piece))
+                    if (!b1.Board[x, y].Piece.Equals(Board[x, y].Piece))
                         return false;
-                    if ((board.Board[x, y].Blocked != Board[x, y].Blocked))
-                        return false;
-                    if ((board.Board[x, y].Color != Board[x, y].Color))
+                    if (b1.Board[x, y].Blocked != Board[x, y].Blocked)
                         return false;
                 }
             }
@@ -78,20 +90,35 @@ namespace DronningeProblemet
         /// <returns>Hashcode based on placement of Queens.</returns>
         public override int GetHashCode()
         {
+            var h1 = GetThisHash();
+            var board = GetTurnedCopy();
+            var h2 = board.GetThisHash();
+            board = board.GetTurnedCopy();
+            var h3 = board.GetThisHash();
+            board = board.GetTurnedCopy();
+            var h4 = board.GetThisHash();
+            var list = new List<int> { h1, h2, h3, h4 };
+            list.Sort();
+            return list.Select(x => x.ToString()).Aggregate((x, y) => x.ToString() + y.ToString()).GetHashCode();
+        }
+
+        public int GetThisHash()
+        {
             var ret = 0;
             for (var x = 0; x < 8; x++)
             {
                 for (var y = 0; y < 8; y++)
                 {
-	                if (Board[x, y].Piece.Type != PieceType.Queen)
-						continue;
-	                ret = ret * 8;
-	                ret = ret + (x + 1);
-	                ret = ret * 8;
-	                ret = ret + (y + 1);
+                    if (Board[x, y].Piece.Type != PieceType.Queen)
+                        continue;
+                    ret = ret * 8;
+                    ret = ret + (x + 1);
+                    ret = ret * 8;
+                    ret = ret + (y + 1);
                 }
             }
             return ret;
+
         }
 
         /// <summary> Try to place a Chesspiece on the given x,y coord, 
