@@ -110,7 +110,7 @@ namespace DronningeProblemetWPF
             can.Children.Clear();
             DrawBoard();
             index.Content = CurrentIndex;
-            var b = Boards.ElementAt(CurrentIndex).GetTurnedCopy();
+            var b = Boards.ElementAt(CurrentIndex).TurnedCopy();
 
             for (var x = 0; x < 8; x++)
             {

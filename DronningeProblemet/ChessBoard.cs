@@ -31,7 +31,7 @@ namespace DronningeProblemet
             return board;
         }
 
-        public ChessBoard GetTurnedCopy()
+        public ChessBoard TurnedCopy()
         {
             var board = new ChessBoard();
 
@@ -43,31 +43,63 @@ namespace DronningeProblemet
                     board.Board[y, 7-x].Piece = Board[x, y].Piece;
                 }
             }
-
-
             return board;
         }
 
-        /// <summary> Calculates if an object is a board, 
-        /// if it is, then if it is equal to this board.</summary>
-        /// <param name="obj"> The object in question. </param>
-        /// <returns>whether an object is a board, if it is, then if it is equal to this board.</returns>
-        public override bool Equals(object obj)
+	    public ChessBoard HorizontalMirrorCopy()
+	    {
+		    var board = new ChessBoard();
+
+			for (var x = 0; x < 8; x++)
+			{
+				for (var y = 0; y < 8; y++)
+				{
+					board.Board[x, Math.Abs(y - 7)].Blocked = Board[x, y].Blocked;
+					board.Board[x, Math.Abs(y - 7)].Piece = Board[x, y].Piece;
+				}
+			}
+
+			return board;
+	    }
+
+		public ChessBoard VerticalMirrorCopy()
+		{
+			var board = new ChessBoard();
+
+			for (var x = 0; x < 8; x++)
+			{
+				for (var y = 0; y < 8; y++)
+				{
+					board.Board[Math.Abs(x - 7), y].Blocked = Board[x, y].Blocked;
+					board.Board[Math.Abs(x - 7), y].Piece = Board[x, y].Piece;
+				}
+			}
+
+			return board;
+		}
+
+		/// <summary> Calculates if an object is a board, 
+		/// if it is, then if it is equal to this board.</summary>
+		/// <param name="obj"> The object in question. </param>
+		/// <returns>whether an object is a board, if it is, then if it is equal to this board.</returns>
+		public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
                 return false;
             var board = (ChessBoard)obj;
 
 
-            var boardT1 = board.GetTurnedCopy();
-            var boardT2 = boardT1.GetTurnedCopy();
-            var boardT3 = boardT2.GetTurnedCopy();
-
+            var boardT1 = board.TurnedCopy();
+            var boardT2 = boardT1.TurnedCopy();
+            var boardT3 = boardT2.TurnedCopy();
 
             return CustomEquals(board)
                    || CustomEquals(boardT1)
                    || CustomEquals(boardT2)
-                   || CustomEquals(boardT3);
+                   || CustomEquals(boardT3)
+				   //|| CustomEquals(VerticalMirrorCopy())
+				   //|| CustomEquals(HorizontalMirrorCopy())
+				   ;
         }
 
         private bool CustomEquals(ChessBoard b1)
@@ -90,19 +122,29 @@ namespace DronningeProblemet
         /// <returns>Hashcode based on placement of Queens.</returns>
         public override int GetHashCode()
         {
-            var h1 = GetThisHash();
-            var board = GetTurnedCopy();
-            var h2 = board.GetThisHash();
-            board = board.GetTurnedCopy();
-            var h3 = board.GetThisHash();
-            board = board.GetTurnedCopy();
-            var h4 = board.GetThisHash();
-            var list = new List<int> { h1, h2, h3, h4 };
+
+            var h1 = ThisHash();
+            var board = TurnedCopy();
+            var h2 = board.ThisHash();
+            board = board.TurnedCopy();
+            var h3 = board.ThisHash();
+            board = board.TurnedCopy();
+            var h4 = board.ThisHash();
+
+	        var list = new List<int>
+	        {
+		        h1,
+		        h2,
+		        h3,
+		        h4,
+				//HorizontalMirrorCopy().ThisHash(),
+				//VerticalMirrorCopy().ThisHash()
+			};
             list.Sort();
             return list.Select(x => x.ToString()).Aggregate((x, y) => x.ToString() + y.ToString()).GetHashCode();
         }
 
-        public int GetThisHash()
+        public int ThisHash()
         {
             var ret = 0;
             for (var x = 0; x < 8; x++)
