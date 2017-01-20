@@ -41,20 +41,22 @@ namespace DronningeProblemet
                 return false;
             var board = (ChessBoard)obj;
 
-            for (var x = 0; x < 8; x++)
-            {
-                for (var y = 0; y < 8; y++)
-                {
-                    if (!board.Board[x, y].Piece.Equals(Board[x, y].Piece))
-                        return false;
-                    if ((board.Board[x, y].Blocked != Board[x, y].Blocked))
-                        return false;
-                    if ((board.Board[x, y].Color != Board[x, y].Color))
-                        return false;
-                }
-            }
-            return true;
-        }
+	        //return this.GetHashCode() == board.GetHashCode();
+
+			for (var x = 0; x < 8; x++)
+			{
+				for (var y = 0; y < 8; y++)
+				{
+					if (!board.Board[x, y].Piece.Equals(Board[x, y].Piece))
+						return false;
+					if ((board.Board[x, y].Blocked != Board[x, y].Blocked))
+						return false;
+					if ((board.Board[x, y].Color != Board[x, y].Color))
+						return false;
+				}
+			}
+			return true;
+		}
 
         /// <summary>Gets the hashcode based on placement of Queens,
         /// this method should be redone, if any other Chesspiece then Queens is used.</summary>

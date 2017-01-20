@@ -12,10 +12,7 @@ namespace DronningeProblemet
 
         /// <summary> Whether or not the field is blocked. </summary>
         public bool Blocked;
-
-        /// <summary> Placeholder for empty field. </summary>
-        private static ChessPiece p = new ChessPiece(PieceType.Empty);
-
+		
         /// <summary> Constructor. </summary>
         /// <param name="color"> Color of the Field. </param>
         /// <param name="blocked"> Whether or not the field is blocked, default is false. </param>
@@ -23,7 +20,7 @@ namespace DronningeProblemet
         {
             Blocked = blocked;
             Color = color;
-            Piece = p;
+            Piece = new ChessPiece(PieceType.Empty); ;
         }
 
 	    public bool IsFree => !Blocked && Piece.Type == PieceType.Empty;
