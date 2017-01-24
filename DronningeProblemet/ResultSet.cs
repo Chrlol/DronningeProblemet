@@ -6,9 +6,9 @@ namespace DronningeProblemet
     public class ResultSet
     {
         public int Queens;
-        public HashSet<ChessBoard> Solutions;
+        public IEnumerable<ChessBoard> Solutions;
 
-        public ResultSet(int queens, HashSet<ChessBoard> solutions)
+        public ResultSet(int queens, IEnumerable<ChessBoard> solutions)
         {
             Queens = queens;
             Solutions = solutions;

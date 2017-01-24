@@ -18,7 +18,7 @@ namespace DronningeProblemet.BlockedFields
                 case PieceType.Queen:
                     return new QueenBlockedFields();
                 case PieceType.Knight:
-                    return new DefaultBlockedFiels();
+                    return new KnighBlockedFields();
                 case PieceType.Pawn:
                     return new DefaultBlockedFiels();
                 case PieceType.Empty:

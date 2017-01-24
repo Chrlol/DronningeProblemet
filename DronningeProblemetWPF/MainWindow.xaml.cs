@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,11 +32,18 @@ namespace DronningeProblemetWPF
         {
             Results = Program.Algorithm(x =>
             {
-                lb.Items.Add(x);
+	            try
+	            {
+					lb.Items.Add(x);
+				}
+	            catch (Exception)
+	            {
+		            // ignored
+	            }
             });
             lb.Items.Add("Calculations Ended");
             lb.Items.Add("Max Number of Queens: " + Results.Queens);
-            lb.Items.Add("Number of Solutions: " + Results.Solutions.Count);
+            lb.Items.Add("Number of Solutions: " + Results.Solutions.Count());
             Boards = Results.Solutions.ToList();
             DrawNext.IsEnabled = true;
             NextClick();

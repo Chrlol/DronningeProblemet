@@ -151,7 +151,7 @@ namespace DronningeProblemet
             {
                 for (var y = 0; y < 8; y++)
                 {
-                    if (Board[x, y].Piece.Type != PieceType.Queen)
+                    if (Board[x, y].Piece.Type == PieceType.Empty)
                         continue;
                     ret = ret * 8;
                     ret = ret + (x + 1);
