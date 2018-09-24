@@ -56,7 +56,7 @@
     <Compile Include="BlockedFields\BlockedFieldsFactory.cs" />
     <Compile Include="BlockedFields\DefaultBlockedFields.cs" />
     <Compile Include="BlockedFields\EmptyBlockedFields.cs" />
-    <Compile Include="BlockedFields\KnighBlockedFields.cs" />
+    <Compile Include="BlockedFields\KnightBlockedFields.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="ChessBoard.cs" />
     <Compile Include="ChessPiece.cs" />

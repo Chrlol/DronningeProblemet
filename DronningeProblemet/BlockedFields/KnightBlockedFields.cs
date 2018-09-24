@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DronningeProblemet.BlockedFields
 {
-	public class KnighBlockedFields : IBlockedFields
+    public class KnightBlockedFields : IBlockedFields
 	{
 		public List<int[]> GetBlockedFields(int x, int y)
 		{
